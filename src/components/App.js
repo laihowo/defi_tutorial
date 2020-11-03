@@ -14,6 +14,31 @@ class App extends Component {
     await this.loadBlockchainData()
   }
 
+  componentDidMount() {
+    var contractaddress = "0xeb7c20027172e5d143fb030d50f91cece2d1485d"
+    var apikey ="P1FCIHQ3E8ACSYN6NXH7NDB718ZI3YDE4B"
+    fetch("https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress="
+      + contractaddress + "&apikey=" + apikey)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  }
+
   async loadBlockchainData() {
     const web3 = window.web3
 
@@ -87,6 +112,10 @@ class App extends Component {
     })
   }
 
+  tokenSupply = () => {
+
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -97,7 +126,11 @@ class App extends Component {
       daiTokenBalance: '0',
       dappTokenBalance: '0',
       stakingBalance: '0',
-      loading: true
+      loading: true,
+
+      error: null,
+      isLoaded: false,
+      items: [],
     }
   }
 
@@ -115,6 +148,19 @@ class App extends Component {
       />
     }
 
+    const { error, isLoaded, items } = this.state;
+    var tokenSupply;
+    if (error) {
+      tokenSupply = <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      tokenSupply = <div>Loading...</div>;
+    } else {
+      tokenSupply = 
+        <ul>
+          <li>eBitcoin Supply {items.result}</li>
+        </ul>;
+    }
+
     return (
       <div>
         <Navbar account={this.state.account} />
@@ -129,7 +175,7 @@ class App extends Component {
                 >
                 </a>
 
-                {content}
+                {content} {tokenSupply}
 
               </div>
             </main>
