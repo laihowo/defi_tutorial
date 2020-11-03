@@ -15,28 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    var contractaddress = "0xeb7c20027172e5d143fb030d50f91cece2d1485d"
-    var apikey ="P1FCIHQ3E8ACSYN6NXH7NDB718ZI3YDE4B"
-    fetch("https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress="
-      + contractaddress + "&apikey=" + apikey)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+
   }
 
   async loadBlockchainData() {
@@ -112,8 +91,29 @@ class App extends Component {
     })
   }
 
-  tokenSupply = () => {
-
+  tokenSupply = (contractaddress) => {
+    //var contractaddress = "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
+    var apikey ="P1FCIHQ3E8ACSYN6NXH7NDB718ZI3YDE4B"
+    fetch("https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress="
+      + contractaddress + "&apikey=" + apikey)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   }
 
   constructor(props) {
@@ -145,6 +145,7 @@ class App extends Component {
         stakingBalance={this.state.stakingBalance}
         stakeTokens={this.stakeTokens}
         unstakeTokens={this.unstakeTokens}
+        tokenSupply={this.tokenSupply}
       />
     }
 
@@ -153,11 +154,11 @@ class App extends Component {
     if (error) {
       tokenSupply = <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      tokenSupply = <div>Loading...</div>;
+      tokenSupply = <div>Please enter the contract address!</div>;
     } else {
       tokenSupply = 
         <ul>
-          <li>eBitcoin Supply {items.result}</li>
+          <li>Token Supply {items.result}</li>
         </ul>;
     }
 
