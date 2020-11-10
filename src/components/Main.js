@@ -28,6 +28,7 @@ class Main extends Component {
 
             <form className="mb-3" onSubmit={(event) => {
                 event.preventDefault()
+                console.log(this.input)
                 let amount
                 amount = this.input.value.toString()
                 amount = window.web3.utils.toWei(amount, 'Ether')
@@ -67,24 +68,12 @@ class Main extends Component {
 
 
 
-              <form className="mb-3" onSubmit={(event) => {
-                event.preventDefault()
-                var contractAddress = this.input.value.toString()
-                this.props.tokenSupply(contractAddress)
-              }}>
-                <div className="input-group mb-4">
-                <input
-                  type="text"
-                  ref={(input) => { this.input = input }}
-                  className="form-control form-control-lg"
-                  placeholder="Contract Address"
-                  required />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block btn-lg">Get Token Supply</button>
-              </form>
+              
           </div>
-        </div>
 
+        
+        </div>
+      
       </div>
     );
   }

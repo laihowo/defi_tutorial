@@ -6,6 +6,7 @@ import TokenFarm from '../abis/TokenFarm.json'
 import Navbar from './Navbar'
 import Main from './Main'
 import './App.css'
+import TokenSupply from './TokenSupply'
 
 class App extends Component {
 
@@ -145,7 +146,6 @@ class App extends Component {
         stakingBalance={this.state.stakingBalance}
         stakeTokens={this.stakeTokens}
         unstakeTokens={this.unstakeTokens}
-        tokenSupply={this.tokenSupply}
       />
     }
 
@@ -178,8 +178,14 @@ class App extends Component {
 
                 {content} {tokenSupply}
 
+                <TokenSupply 
+                  tokenSupply={this.tokenSupply} 
+                />
+
               </div>
+              
             </main>
+            
           </div>
         </div>
       </div>
