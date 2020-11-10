@@ -7,6 +7,7 @@ import Navbar from './Navbar'
 import Main from './Main'
 import './App.css'
 import TokenSupply from './TokenSupply'
+import AddWallet from './AddWallet'
 
 class App extends Component {
 
@@ -181,6 +182,8 @@ class App extends Component {
                 <TokenSupply 
                   tokenSupply={this.tokenSupply} 
                 />
+
+                <AddWallet></AddWallet>
 
               </div>
               
