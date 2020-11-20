@@ -13,7 +13,10 @@ class AddWallet extends Component {
 
     render() {
         return (
+          <div>
             <button onClick={this.handleClick}>Add MetaMask Wallet</button>
+            <br /> <br />
+          </div>
         )
     }
 

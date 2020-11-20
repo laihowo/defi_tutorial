@@ -8,6 +8,7 @@ import Main from './Main'
 import './App.css'
 import TokenSupply from './TokenSupply'
 import AddWallet from './AddWallet'
+import TokenExchange from './TokenExchange'
 
 class App extends Component {
 
@@ -28,12 +29,31 @@ class App extends Component {
 
     const networkId = await web3.eth.net.getId()
 
+    //(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/55bdf7c244cc4f039690426ace32465d:8545'))
+
+    var web32 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/55bdf7c244cc4f039690426ace32465d"));
+    console.log(web32.eth.Contract.name)
+
+    var Web33 = require('web3');
+
+    if (typeof Web33 !== 'undefined') {
+        Web33 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        Web33 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/55bdf7c244cc4f039690426ace32465d"));
+    }
+
     // Load DaiToken
     const daiTokenData = DaiToken.networks[networkId]
     if(daiTokenData) {
       const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
+      
       this.setState({ daiToken })
       let daiTokenBalance = await daiToken.methods.balanceOf(this.state.account).call()
+      
+      let daiTokenName = await daiToken.methods.name().call()
+      console.log(daiTokenName)
+      
       this.setState({ daiTokenBalance: daiTokenBalance.toString() })
     } else {
       window.alert('DaiToken contract not deployed to detected network.')
@@ -45,6 +65,7 @@ class App extends Component {
       const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
       this.setState({ dappToken })
       let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
+      
       this.setState({ dappTokenBalance: dappTokenBalance.toString() })
     } else {
       window.alert('DappToken contract not deployed to detected network.')
@@ -91,6 +112,10 @@ class App extends Component {
     this.state.tokenFarm.methods.unstakeTokens().send({ from: this.state.account }).on('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
+  }
+
+  tokenExchange = (tokenAmount) => {
+
   }
 
   tokenSupply = (contractaddress) => {
@@ -184,6 +209,10 @@ class App extends Component {
                 />
 
                 <AddWallet></AddWallet>
+
+                <TokenExchange
+                  tokenExchange={this.tokenExchange}>
+                </TokenExchange>
 
               </div>
               
