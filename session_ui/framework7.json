@@ -1,0 +1,26 @@
+{
+  "cwd": "/home/codespace/workspace/session_ui/react",
+  "type": [
+    "web"
+  ],
+  "name": "My App",
+  "framework": "react",
+  "template": "split-view",
+  "bundler": "webpack",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false,
+  "webpack": {
+    "developmentSourceMap": true,
+    "productionSourceMap": true,
+    "hashAssets": false,
+    "preserveAssetsPaths": false,
+    "inlineAssets": true
+  }
+}
