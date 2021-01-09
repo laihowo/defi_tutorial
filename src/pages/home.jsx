@@ -115,7 +115,7 @@ export default class extends React.Component {
         tokenFarmData.address
       );
       this.setState({ tokenFarm });
-      
+
       let stakingBalance = await tokenFarm.methods
         .stakingBalance(this.state.account)
         .call();
@@ -126,6 +126,33 @@ export default class extends React.Component {
 
     this.setState({ loading: false });
   }
+
+  stakeTokens = (amount) => {
+    this.setState({ loading: true });
+
+    this.state.daiToken.methods
+      .approve(this.state.tokenFarm._address, amount)
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.state.tokenFarm.methods
+          .stakeTokens(amount)
+          .send({ from: this.state.account })
+          .on("transactionHash", (hash) => {
+            this.setState({ loading: false });
+          });
+      });
+  };
+
+  unstakeTokens = (amount) => {
+    this.setState({ loading: true });
+    
+    this.state.tokenFarm.methods
+      .unstakeTokens()
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.setState({ loading: false });
+      });
+  };
 
   render() {
     var content;
