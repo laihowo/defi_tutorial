@@ -6,9 +6,9 @@ import TokenFarm from '../abis/TokenFarm.json'
 import Navbar from './Navbar'
 import Main from './Main'
 import './App.css'
-import TokenSupply from './TokenSupply'
+import TokenSupply from '../../../src/components/TokenSupply'
 import AddWallet from './AddWallet'
-import TokenExchange from './TokenExchange'
+import TokenExchange from '../../../src/components/TokenExchange'
 
 class App extends Component {
 
@@ -59,17 +59,9 @@ class App extends Component {
       window.alert('DaiToken contract not deployed to detected network.')
     }
 
-    // Load DappToken
-    const dappTokenData = DappToken.networks[networkId]
-    if(dappTokenData) {
-      const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
-      this.setState({ dappToken })
-      let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
-      
-      this.setState({ dappTokenBalance: dappTokenBalance.toString() })
-    } else {
-      window.alert('DappToken contract not deployed to detected network.')
-    }
+
+    
+    
 
     // Load TokenFarm
     const tokenFarmData = TokenFarm.networks[networkId]
