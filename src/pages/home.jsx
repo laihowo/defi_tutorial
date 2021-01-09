@@ -77,18 +77,15 @@ export default class extends React.Component {
         DaiToken.abi,
         daiTokenData.address
       );
-
       this.setState({ daiToken });
+
       let daiTokenBalance = await daiToken.methods
         .balanceOf(this.state.account)
         .call();
-
-      console.log(daiTokenBalance.toString())
+      this.setState({ daiTokenBalance: daiTokenBalance.toString() });
 
       // let daiTokenName = await daiToken.methods.name().call();
       // console.log(daiTokenName);
-
-      this.setState({ daiTokenBalance: daiTokenBalance.toString() });
     } else {
       window.alert("DaiToken contract not deployed to detected network.");
     }
@@ -101,10 +98,10 @@ export default class extends React.Component {
         dappTokenData.address
       );
       this.setState({ dappToken });
+
       let dappTokenBalance = await dappToken.methods
         .balanceOf(this.state.account)
         .call();
-
       this.setState({ dappTokenBalance: dappTokenBalance.toString() });
     } else {
       window.alert("DappToken contract not deployed to detected network.");
@@ -118,6 +115,7 @@ export default class extends React.Component {
         tokenFarmData.address
       );
       this.setState({ tokenFarm });
+      
       let stakingBalance = await tokenFarm.methods
         .stakingBalance(this.state.account)
         .call();
