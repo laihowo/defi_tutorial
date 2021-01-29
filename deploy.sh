@@ -1,0 +1,1 @@
+npm start | ganache-cli --deterministic | truffle migrate --reset
